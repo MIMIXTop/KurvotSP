@@ -1,11 +1,11 @@
+#ifndef LOGER_HPP
+#define LOGER_HPP
+
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
-
-inline const std::string logFileDir = std::string(std::getenv("HOME")) + "/.logs";
-inline const std::string logFile = "/compositor.log";
 
 class Loger {
 public:
@@ -14,14 +14,24 @@ public:
     }
 
 private:
+    static const std::string& getLogFileDir() {
+        static const std::string logFileDir = std::string(std::getenv("HOME")) + "/.logs";
+        return logFileDir;
+    }
+    
+    static const std::string& getLogFile() {
+        static const std::string logFile = "/compositor.log";
+        return logFile;
+    }
+
     Loger() {
-        if (!std::filesystem::exists(logFileDir)) {
-            if (!std::filesystem::create_directories(logFileDir)) {
+        if (!std::filesystem::exists(getLogFileDir())) {
+            if (!std::filesystem::create_directories(getLogFileDir())) {
                 throw std::runtime_error("Не удалось создать директорию!");
             }
         }
 
-        file.open(logFileDir + logFile, std::ios::app);
+        file.open(getLogFileDir() + getLogFile(), std::ios::app);
         if (!file) {
             throw std::runtime_error("Не удалось создать файл!");
         }
@@ -36,3 +46,5 @@ private:
 
     std::ofstream file;
 };
+
+#endif

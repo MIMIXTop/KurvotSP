@@ -1,11 +1,8 @@
-// Copyright (C) 2018 The Qt Company Ltd.
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 import QtQuick
 import QtWayland.Compositor
 import QtWayland.Compositor.XdgShell
-import QtQuick.Window
-import QtQuick.Controls
-import Launcher
+import Launcher 1.0
+import MyModel 1.0
 
 WaylandCompositor {
     id: compositor
@@ -13,6 +10,15 @@ WaylandCompositor {
     socketName: "wayland-1"
     Launcher {
         id: launcher
+    }
+
+    Component.onCompleted: {
+        console.log("WaylandCompositor initialized with socket:", socketName)
+    }
+
+    MyModel {
+        id: myModel
+        onCountChanged: view.forceLayout()
     }
 
     WaylandOutput {
@@ -24,149 +30,80 @@ WaylandCompositor {
             property int pixelHeight: height * screen.devicePixelRatio
 
             visible: true
-            width: 1280
-            height: 720
+            width: 1920
+            height: 1280
 
-            Image {
-                anchors.fill: parent
-                source: "file:///home/mimixtop/back.png"
-                fillMode: Image.PreserveAspectCrop
+            Component.onCompleted: {
+                console.log("Main window created with size:", width,
+                            "x", height)
             }
 
-            Grid {
-                id: grid
-
-                property bool overview: true
-                property int selected: 0
-                property int selectedColumn: selected % columns
-                property int selectedRow: selected / columns
-
+            Background {
                 anchors.fill: parent
-                columns: Math.ceil(Math.sqrt(toplevels.count))
-                // ![zoom transform]
-                transform: [
-                    Scale {
-                        xScale: grid.overview ? (1.0 / grid.columns) : 1
-                        yScale: grid.overview ? (1.0 / grid.columns) : 1
-                        Behavior on xScale {
-                            PropertyAnimation {
-                                easing.type: Easing.InOutQuad
-                                duration: 200
-                            }
-                        }
-                        Behavior on yScale {
-                            PropertyAnimation {
-                                easing.type: Easing.InOutQuad
-                                duration: 200
-                            }
-                        }
-                    },
-                    Translate {
-                        x: grid.overview ? 0 : win.width * -grid.selectedColumn
-                        y: grid.overview ? 0 : win.height * -grid.selectedRow
-                        Behavior on x {
-                            PropertyAnimation {
-                                easing.type: Easing.InOutQuad
-                                duration: 200
-                            }
-                        }
-                        Behavior on y {
-                            PropertyAnimation {
-                                easing.type: Easing.InOutQuad
-                                duration: 200
-                            }
+            }
+
+            // ![toplevels repeater]
+            Item {
+                anchors.fill: parent
+
+                Row {
+                    anchors.fill: parent
+                    spacing: 5
+                    ShellSurfaceItem {
+                        shellSurface: myModel.at(0)
+                        width: (myModel.count === 1) ? parent.width : (parent.width / 2)
+                        height: parent.height
+                        Component.onCompleted: {
+                            console.log("HELLO")
                         }
                     }
-                ]
-                // ![zoom transform]
 
-                // ![toplevels repeater]
-                Repeater {
-                    model: toplevels
-                    Item {
-                        width: win.width
-                        height: win.height
-                        ShellSurfaceItem {
-                            anchors.fill: parent
-                            shellSurface: xdgSurface
-                            onSurfaceDestroyed: toplevels.remove(index)
-                        }
-                        MouseArea {
-                            enabled: grid.overview
-                            anchors.fill: parent
-                            onClicked: {
-                                grid.selected = index
-                                grid.overview = false
-                            }
+                    ListView {
+                        id: view
+                        width: (myModel.count === 1) ? 0 : (parent.width / 2)
+                        height: parent.height
+                        model: myModel.allButFirst
+                        anchors.top: parent.top
+                        spacing: 5
+                        delegate: ShellSurfaceItem {
+                            shellSurface: modelData
+                            width: parent.width
+                            height: view.height / (myModel.count - 1)
                         }
                     }
                 }
-                // ![toplevels repeater]
             }
 
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                text: "Toggle overview"
-                onClicked: grid.overview = !grid.overview
-            }
             Shortcut {
                 sequence: "F12"
-                onActivated: launcher.qtLaunchtermunal(socketName)
+                onActivated: {
+                    console.log("F12 pressed - launching terminal")
+                    launcher.launchTermunal(socketName)
+                }
             }
 
             Shortcut {
                 sequence: "F1"
-                onActivated: win.close()
+                onActivated: {
+                    console.log("F1 pressed - closing window")
+                    win.close()
+                }
             }
-
-            Shortcut {
-                sequence: "Super"
-                onActivated: grid.overview = !grid.overview
-            }
-
-            // Image {
-            //     id: backbraund
-            //     anchors.fill: parent
-            //     source: "/home/mimixtop/Projects/FutureKurvot/TemplateWaylandCompositor/build/Qt_6_10_0_PATH-Debug/backgraund.png"
-            // }
-
-            // Shortcut {
-            //     sequence: "right"
-            //     onActivated: grid.selected = Math.min(grid.selected + 1,
-            //                                           toplevels.count - 1)
-            // }
-            // Shortcut {
-            //     sequence: "left"
-            //     onActivated: grid.selected = Math.max(grid.selected - 1, 0)
-            // }
-            // Shortcut {
-            //     sequence: "up"
-            //     onActivated: grid.selected = Math.max(
-            //                      grid.selected - grid.columns, 0)
-            // }
-            // Shortcut {
-            //     sequence: "down"
-            //     onActivated: grid.selected = Math.min(
-            //                      grid.selected + grid.columns,
-            //                      toplevels.count - 1)
-            // }
         }
-    }
-
-    ListModel {
-        id: toplevels
     }
 
     // ![XdgShell]
     XdgShell {
         onToplevelCreated: (toplevel, xdgSurface) => {
-                               toplevels.append({
-                                                    "xdgSurface": xdgSurface
-                                                })
-                               toplevel.sendFullscreen(Qt.size(win.pixelWidth,
-                                                               win.pixelHeight))
+                               myModel.append(xdgSurface)
+                               //toplevel.sendFullscreen(Qt.size(win.pixelWidth,
+                               //                                win.pixelHeight))
                            }
     }
+
+    XdgDecorationManagerV1 {
+        preferredMode: XdgToplevel.ServerSideDecoration
+    }
+
     // ![XdgShell]
 }

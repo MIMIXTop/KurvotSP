@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(TemplateWaylandCompositor VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
 
@@ -11,7 +12,8 @@ qt_standard_project_setup(REQUIRES 6.8)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 COMPONENTS REQUIRED Core Qml WaylandCompositor)
+find_package(Qt6 COMPONENTS REQUIRED Core Qml Quick WaylandCompositor )
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 file(GLOB SRCS "src/*.cpp")
 file(GLOB HEADERS "src/*.hpp")
@@ -26,8 +28,7 @@ qt_add_qml_module(appTemplateWaylandCompositor
     VERSION 1.0
     QML_FILES
         src/QmlSource/Main.qml
-        SOURCES src/launcher.h src/launcher.cpp
-        QML_FILES src/QmlSource/CompositorBackgraund.qml
+        QML_FILES src/QmlSource/Background.qml
 )
 
 set_target_properties(appTemplateWaylandCompositor PROPERTIES
@@ -43,6 +44,7 @@ target_link_libraries(appTemplateWaylandCompositor PRIVATE
     Qt6::WaylandCompositor
     Qt6::Qml
 )
+target_link_libraries(appTemplateWaylandCompositor PRIVATE Qt6::Core)
 
 include(GNUInstallDirs)
 install(TARGETS appTemplateWaylandCompositor

@@ -5,7 +5,7 @@ import QtQuick.Window
 import QtQuick.Controls
 import Launcher
 
-Rectangle {
-    id: backgraund
-    color: black
+Image {
+    source: "file:///home/mimixtop/back.png"
+    fillMode: Image.PreserveAspectCrop
 }
