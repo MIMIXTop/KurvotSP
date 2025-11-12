@@ -48,6 +48,13 @@ QVariantList CompositorModel::allButFirst() const {
     return res;
 }
 
+QVariantList CompositorModel::first() const {
+    QVariantList res;
+    auto it = m_surfaces.cbegin();
+    res << QVariant::fromValue(*it);
+    return res;
+}
+
 
 QWaylandXdgSurface *CompositorModel::at(int index) const {
     return index >= 0 && index < m_surfaces.size() ? m_surfaces.at(index) : nullptr;

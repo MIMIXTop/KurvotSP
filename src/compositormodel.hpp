@@ -10,6 +10,7 @@ class CompositorModel : public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged FINAL)
     Q_PROPERTY(QVariantList allButFirst READ allButFirst NOTIFY countChanged)
+    Q_PROPERTY(QVariantList first READ first NOTIFY countChanged)
 public:
     CompositorModel(QObject *parent = nullptr);
     int rowCount(const QModelIndex &parent) const override;
@@ -18,7 +19,8 @@ public:
     Q_INVOKABLE void append(QWaylandXdgSurface* surface);
     Q_INVOKABLE void remove(int index);
     Q_INVOKABLE QVariantList allButFirst() const;
-    QWaylandXdgSurface* at(int index) const;
+    Q_INVOKABLE QVariantList first() const;
+    Q_INVOKABLE QWaylandXdgSurface* at(int index) const;
 signals:
     void countChanged();
 private:

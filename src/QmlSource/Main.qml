@@ -18,7 +18,30 @@ WaylandCompositor {
 
     MyModel {
         id: myModel
-        onCountChanged: view.forceLayout()
+        onCountChanged: {
+            for (var i = 0; i < myModel.count; ++i) {
+                let surface = myModel.at(i) // получаем xdgSurface
+                if (i === 0 && myModel.count > 1) {
+                    // первый занимает половину экрана
+                    surface.toplevel.sendFullscreen(
+                                Qt.size(
+                                    mainTail.width * screen.devicePixelRatio,
+                                    mainTail.height * screen.devicePixelRatio))
+                } else if (myModel.count > 1) {
+                    // остальные делят вторую половину
+                    surface.toplevel.sendFullscreen(
+                                Qt.size(
+                                    view.width * screen.devicePixelRatio,
+                                    (view.height / (myModel.count - 1)) * screen.devicePixelRatio))
+                } else {
+                    // единственное окно занимает всё
+                    surface.toplevel.sendFullscreen(Qt.size(win.pixelWidth,
+                                                            win.pixelHeight))
+                }
+            }
+
+            view.forceLayout()
+        }
     }
 
     WaylandOutput {
@@ -45,16 +68,24 @@ WaylandCompositor {
             // ![toplevels repeater]
             Item {
                 anchors.fill: parent
+                height: parent.height
+                width: parent.width
 
                 Row {
                     anchors.fill: parent
-                    spacing: 5
-                    ShellSurfaceItem {
-                        shellSurface: myModel.at(0)
+                    height: parent.height
+                    width: parent.width
+
+                    ListView {
+                        id: mainTail
                         width: (myModel.count === 1) ? parent.width : (parent.width / 2)
                         height: parent.height
-                        Component.onCompleted: {
-                            console.log("HELLO")
+                        model: myModel.first
+                        delegate: ShellSurfaceItem {
+                            shellSurface: modelData
+                            width: mainTail.width
+                            height: mainTail.height
+                            focus: true
                         }
                     }
 
@@ -63,11 +94,9 @@ WaylandCompositor {
                         width: (myModel.count === 1) ? 0 : (parent.width / 2)
                         height: parent.height
                         model: myModel.allButFirst
-                        anchors.top: parent.top
-                        spacing: 5
                         delegate: ShellSurfaceItem {
                             shellSurface: modelData
-                            width: parent.width
+                            width: view.width
                             height: view.height / (myModel.count - 1)
                         }
                     }
@@ -96,8 +125,18 @@ WaylandCompositor {
     XdgShell {
         onToplevelCreated: (toplevel, xdgSurface) => {
                                myModel.append(xdgSurface)
-                               //toplevel.sendFullscreen(Qt.size(win.pixelWidth,
-                               //                                win.pixelHeight))
+                               if (myModel.count > 1) {
+                                   toplevel.sendFullscreen(
+                                       Qt.size(
+                                           view.width * screen.devicePixelRatio,
+                                           (view.height / (myModel.count - 1))
+                                           * screen.devicePixelRatio))
+                               } else {
+
+                                   toplevel.sendFullscreen(Qt.size(
+                                                               win.pixelWidth,
+                                                               win.pixelHeight))
+                               }
                            }
     }
 
