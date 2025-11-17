@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QWaylandXdgSurface>
 
-#include "launcher.hpp"
+#include "ProcessManager.hpp"
 #include "loger.hpp"
 #include "compositormodel.hpp"
 
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qRegisterMetaType<QWaylandXdgSurface*>("QWaylandXdgSurface*");
-    qmlRegisterType<Launcher>("Launcher", 1, 0, "Launcher");
+    qmlRegisterType<ProcessManager>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<CompositorModel>("MyModel", 1, 0, "MyModel");
     
     QQmlApplicationEngine engine;
