@@ -19,27 +19,33 @@ WaylandCompositor {
     MyModel {
         id: myModel
         onCountChanged: {
-            for (var i = 0; i < myModel.count; ++i) {
-                let surface = myModel.at(i) // получаем xdgSurface
+            for (var i = 0; i < myModel.count; i++) {
+                let surface = myModel.at(i)
+
+                console.log("count:", myModel.count, "i:", i)
+
                 if (i === 0 && myModel.count > 1) {
                     // первый занимает половину экрана
-                    surface.toplevel.sendFullscreen(
+                    surface.toplevel.sendResizing(
                                 Qt.size(
-                                    mainTail.width * screen.devicePixelRatio,
-                                    mainTail.height * screen.devicePixelRatio))
-                } else if (myModel.count > 1) {
+                                    view.width * win.Screen.devicePixelRatio,
+                                    view.height * win.Screen.devicePixelRatio))
+                    console.log("Hello1")
+                } else if (i > 0 && myModel.count > 1) {
                     // остальные делят вторую половину
-                    surface.toplevel.sendFullscreen(
+                    surface.toplevel.sendResizing(
                                 Qt.size(
-                                    view.width * screen.devicePixelRatio,
-                                    (view.height / (myModel.count - 1)) * screen.devicePixelRatio))
+                                    view.width * win.Screen.devicePixelRatio,
+                                    (view.height / (myModel.count - 1))
+                                    * win.Screen.devicePixelRatio))
+                    console.log("Hello2")
                 } else {
                     // единственное окно занимает всё
-                    surface.toplevel.sendFullscreen(Qt.size(win.pixelWidth,
-                                                            win.pixelHeight))
+                    surface.toplevel.sendResizing(Qt.size(win.pixelWidth,
+                                                          win.pixelHeight))
+                    console.log("Hello3")
                 }
             }
-
             view.forceLayout()
         }
     }
@@ -75,12 +81,14 @@ WaylandCompositor {
                     anchors.fill: parent
                     height: parent.height
                     width: parent.width
+                    spacing: 10
 
                     ListView {
                         id: mainTail
                         width: (myModel.count === 1) ? parent.width : (parent.width / 2)
                         height: parent.height
                         model: myModel.first
+
                         delegate: ShellSurfaceItem {
                             shellSurface: modelData
                             width: mainTail.width
@@ -94,6 +102,7 @@ WaylandCompositor {
                         width: (myModel.count === 1) ? 0 : (parent.width / 2)
                         height: parent.height
                         model: myModel.allButFirst
+                        spacing: 10
                         delegate: ShellSurfaceItem {
                             shellSurface: modelData
                             width: view.width
@@ -143,6 +152,5 @@ WaylandCompositor {
     XdgDecorationManagerV1 {
         preferredMode: XdgToplevel.ServerSideDecoration
     }
-
     // ![XdgShell]
 }
