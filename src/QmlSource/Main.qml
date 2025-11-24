@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtWayland.Compositor
 import QtWayland.Compositor.XdgShell
 import Launcher 1.0
@@ -16,7 +17,7 @@ WaylandCompositor {
         console.log("WaylandCompositor initialized with socket:", socketName)
     }
 
-    MyModel {
+    /*MyModel {
         id: myModel
         onCountChanged: {
             for (var i = 0; i < myModel.count; i++) {
@@ -24,29 +25,50 @@ WaylandCompositor {
 
                 console.log("count:", myModel.count, "i:", i)
 
-                if (i === 0 && myModel.count > 1) {
-                    // первый занимает половину экрана
-                    surface.toplevel.sendResizing(
-                                Qt.size(
-                                    view.width * win.Screen.devicePixelRatio,
-                                    view.height * win.Screen.devicePixelRatio))
+                switch(myModel.count) {
+                case 1:
+                    surface.toplevel.sendResizing(Qt.size(win.width, win.height))
                     console.log("Hello1")
-                } else if (i > 0 && myModel.count > 1) {
-                    // остальные делят вторую половину
-                    surface.toplevel.sendResizing(
-                                Qt.size(
-                                    view.width * win.Screen.devicePixelRatio,
-                                    (view.height / (myModel.count - 1))
-                                    * win.Screen.devicePixelRatio))
+                    break;
+                case 2:
+                    surface.toplevel.sendResizing(Qt.size(win.width / 2, win.height))
                     console.log("Hello2")
-                } else {
-                    // единственное окно занимает всё
-                    surface.toplevel.sendResizing(Qt.size(win.pixelWidth,
-                                                          win.pixelHeight))
+                    break;
+                default:
+                    switch (i) {
+                        case 0:
+                            surface.toplevel.sendResizing(Qt.size(view.width, view.height))
+                            break;
+                        default:
+                            surface.toplevel.sendResizing(Qt.size(view.width, view.height / (myModel.count - 1)))
+                            break;
+                    }
                     console.log("Hello3")
+                    break;
                 }
             }
             view.forceLayout()
+        }
+    }*/
+
+    ListModel {
+        id: myModel
+        onCountChanged: {
+            for (var i = 0; i < myModel.count; i++) {
+                let surface = myModel.get(i)
+
+                console.log("count:", myModel.count, "i:", i)
+
+                if (myModel.count === 1) {
+                     surface.shellSurface.toplevel.sendResizing(Qt.size(win.width, win.height))
+                } else {
+                    if (i === 0) {
+                        surface.shellSurface.toplevel.sendResizing(Qt.size(win.width / 2, win.height))
+                    } else {
+                        surface.shellSurface.toplevel.sendResizing(Qt.size(win.width / 2, win.height / (myModel.count - 1)))
+                    }
+                }
+            }
         }
     }
 
@@ -70,53 +92,11 @@ WaylandCompositor {
             Background {
                 anchors.fill: parent
             }
-
-            // ![toplevels repeater]
-            Item {
-                anchors.fill: parent
-                height: parent.height
-                width: parent.width
-
-                Row {
-                    anchors.fill: parent
-                    height: parent.height
-                    width: parent.width
-                    spacing: 10
-
-                    ListView {
-                        id: mainTail
-                        width: (myModel.count === 1) ? parent.width : (parent.width / 2)
-                        height: parent.height
-                        model: myModel.first
-
-                        delegate: ShellSurfaceItem {
-                            shellSurface: modelData
-                            width: mainTail.width
-                            height: mainTail.height
-                            focus: true
-                        }
-                    }
-
-                    ListView {
-                        id: view
-                        width: (myModel.count === 1) ? 0 : (parent.width / 2)
-                        height: parent.height
-                        model: myModel.allButFirst
-                        spacing: 10
-                        delegate: ShellSurfaceItem {
-                            shellSurface: modelData
-                            width: view.width
-                            height: view.height / (myModel.count - 1)
-                        }
-                    }
-                }
-            }
-
             Shortcut {
                 sequence: "F12"
                 onActivated: {
                     console.log("F12 pressed - launching terminal")
-                    launcher.launchTermunal(socketName)
+                    launcher.launchTermunal(compositor.socketName)
                 }
             }
 
@@ -127,30 +107,81 @@ WaylandCompositor {
                     win.close()
                 }
             }
-        }
-    }
 
-    // ![XdgShell]
+            Item {
+                id: rootArea
+                anchors.fill: parent
+                Repeater {
+                    model: myModel
+                    ShellSurfaceItem {
+                        id: shellSurfaceItem
+                        shellSurface: model.shellSurface
+                        onSurfaceDestroyed: myModel.remove(index)
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                myModel.forceActiveFocus()
+                            }
+                        }
+
+                        property int count: myModel.count
+                        property int idx: index
+
+                        property real screenW: output.geometry.width
+                        property real screenH: output.geometry.height
+
+                        x: {
+                            if (count === 1) return 0;
+                            if (idx === 0) return 0;
+                            return screenW / 2;
+                        }
+
+                        y: {
+                            if (count === 1) return 0;
+                            if (idx === 0) return 0;
+
+                            // Высота одного окна в стеке
+                            var stackHeight = screenH / (count - 1);
+                            // Смещение (индекс в стеке * высоту)
+                            // idx - 1, так как 0-й элемент это мастер
+                            return (idx - 1) * stackHeight;
+                        }
+
+                        width: {
+                            if (count === 1) return screenW;
+                            return screenW / 2;
+                        }
+
+                        // Логика Высоты
+                        // Одно окно -> вся высота
+                        // Мастер (0-й) -> вся высота
+                        // Остальные -> высота / (количество - 1)
+                        height: {
+                            if (count === 1) return screenH;
+                            if (idx === 0) return screenH;
+                            return screenH / (count - 1);
+                        }
+
+                        Behavior on x { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
+                        Behavior on y { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
+                        Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
+                        Behavior on height { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
+                    }
+                }
+            }
+        }
+
+        }
+    
     XdgShell {
         onToplevelCreated: (toplevel, xdgSurface) => {
-                               myModel.append(xdgSurface)
-                               if (myModel.count > 1) {
-                                   toplevel.sendFullscreen(
-                                       Qt.size(
-                                           view.width * screen.devicePixelRatio,
-                                           (view.height / (myModel.count - 1))
-                                           * screen.devicePixelRatio))
-                               } else {
-
-                                   toplevel.sendFullscreen(Qt.size(
-                                                               win.pixelWidth,
-                                                               win.pixelHeight))
-                               }
+                               myModel.append({ "shellSurface": xdgSurface });
                            }
     }
 
     XdgDecorationManagerV1 {
         preferredMode: XdgToplevel.ServerSideDecoration
     }
-    // ![XdgShell]
+
+
 }
