@@ -17,40 +17,6 @@ WaylandCompositor {
         console.log("WaylandCompositor initialized with socket:", socketName)
     }
 
-    /*MyModel {
-        id: myModel
-        onCountChanged: {
-            for (var i = 0; i < myModel.count; i++) {
-                let surface = myModel.at(i)
-
-                console.log("count:", myModel.count, "i:", i)
-
-                switch(myModel.count) {
-                case 1:
-                    surface.toplevel.sendResizing(Qt.size(win.width, win.height))
-                    console.log("Hello1")
-                    break;
-                case 2:
-                    surface.toplevel.sendResizing(Qt.size(win.width / 2, win.height))
-                    console.log("Hello2")
-                    break;
-                default:
-                    switch (i) {
-                        case 0:
-                            surface.toplevel.sendResizing(Qt.size(view.width, view.height))
-                            break;
-                        default:
-                            surface.toplevel.sendResizing(Qt.size(view.width, view.height / (myModel.count - 1)))
-                            break;
-                    }
-                    console.log("Hello3")
-                    break;
-                }
-            }
-            view.forceLayout()
-        }
-    }*/
-
     ListModel {
         id: myModel
         onCountChanged: {
@@ -112,14 +78,13 @@ WaylandCompositor {
                 id: rootArea
                 anchors.fill: parent
 
-                // Внешние отступы от экрана
                 property int marginLeft: 12
                 property int marginRight: 12
                 property int marginTop: 12
                 property int marginBottom: 12
 
-                property int columnGap: 12     // между мастер-колонкой и стеком
-                property int rowGap: 8         // между окнами в стеке
+                property int columnGap: 12     
+                property int rowGap: 8         
 
                 Repeater {
                     model: myModel
@@ -140,11 +105,9 @@ WaylandCompositor {
                         property real screenW: output.geometry.width
                         property real screenH: output.geometry.height
 
-                        // Доступная площадь с учётом внешних отступов
                         property real availW: screenW - (rootArea.marginLeft + rootArea.marginRight)
                         property real availH: screenH - (rootArea.marginTop + rootArea.marginBottom)
 
-                        // Ширина колонок: мастер и стек
                         property real masterW: (count === 1)
                                             ? availW
                                             : (availW - rootArea.columnGap) / 2
@@ -176,8 +139,8 @@ WaylandCompositor {
 
                         height: {
                             if (count === 1) return availH;
-                            if (idx === 0) return availH;    // мастер — вся доступная высота
-                            return stackItemH;               // элемент стека — равные доли + зазоры
+                            if (idx === 0) return availH;    
+                            return stackItemH;            
                         }
 
                         Behavior on x { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
