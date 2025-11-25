@@ -84,19 +84,21 @@ WaylandCompositor {
                 property int marginBottom: 12
 
                 property int columnGap: 12     
-                property int rowGap: 8         
+                property int rowGap: 8       
 
                 Repeater {
                     model: myModel
                     ShellSurfaceItem {
                         id: shellSurfaceItem
+                        inputEventsEnabled: true
+                        visible: modelData.toplevel.decrationMode === XdgDecorationManagerV1.ServerSideDecoration
                         shellSurface: model.shellSurface
                         onSurfaceDestroyed: myModel.remove(index)
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                myModel.forceActiveFocus()
-                            }
+                                console.log("Activating window...1")
+                                shellSurfaceItem.focus = true
                         }
 
                         property int count: myModel.count
@@ -118,6 +120,26 @@ WaylandCompositor {
                             var n = count - 1;
                             var totalGaps = (n - 1) * rootArea.rowGap;
                             return (availH - totalGaps) / n;
+                        }
+
+                        Rectangle {
+                            width: parent.width + 4
+                            height: parent.height + 4
+                            anchors.centerIn: parent
+                            color: "transparent"
+                            border.color: "steelblue"
+                            border.width: 2
+                            radius: 6
+                            z: -1 // ниже окна
+                        }
+
+                        Rectangle {
+                            id: windowFrame
+                            anchors.fill: parent
+                            radius: 8
+                            color: "transparent" // или прозрачный, если нужно
+                            clip: true      // обрезает содержимое по скруглению
+                            z: 0
                         }
 
                         x: {
