@@ -111,6 +111,16 @@ WaylandCompositor {
             Item {
                 id: rootArea
                 anchors.fill: parent
+
+                // Внешние отступы от экрана
+                property int marginLeft: 12
+                property int marginRight: 12
+                property int marginTop: 12
+                property int marginBottom: 12
+
+                property int columnGap: 12     // между мастер-колонкой и стеком
+                property int rowGap: 8         // между окнами в стеке
+
                 Repeater {
                     model: myModel
                     ShellSurfaceItem {
@@ -130,36 +140,44 @@ WaylandCompositor {
                         property real screenW: output.geometry.width
                         property real screenH: output.geometry.height
 
+                        // Доступная площадь с учётом внешних отступов
+                        property real availW: screenW - (rootArea.marginLeft + rootArea.marginRight)
+                        property real availH: screenH - (rootArea.marginTop + rootArea.marginBottom)
+
+                        // Ширина колонок: мастер и стек
+                        property real masterW: (count === 1)
+                                            ? availW
+                                            : (availW - rootArea.columnGap) / 2
+                        property real stackW: masterW
+
+                        property real stackItemH: {
+                            if (count <= 1) return availH;
+                            var n = count - 1;
+                            var totalGaps = (n - 1) * rootArea.rowGap;
+                            return (availH - totalGaps) / n;
+                        }
+
                         x: {
-                            if (count === 1) return 0;
-                            if (idx === 0) return 0;
-                            return screenW / 2;
+                            if (count === 1) return rootArea.marginLeft;
+                            if (idx === 0) return rootArea.marginLeft;
+                            return rootArea.marginLeft + masterW + rootArea.columnGap;
                         }
 
                         y: {
-                            if (count === 1) return 0;
-                            if (idx === 0) return 0;
-
-                            // Высота одного окна в стеке
-                            var stackHeight = screenH / (count - 1);
-                            // Смещение (индекс в стеке * высоту)
-                            // idx - 1, так как 0-й элемент это мастер
-                            return (idx - 1) * stackHeight;
+                            if (count === 1) return rootArea.marginTop;
+                            if (idx === 0) return rootArea.marginTop; 
+                            return rootArea.marginTop + (idx - 1) * (stackItemH + rootArea.rowGap);
                         }
 
                         width: {
-                            if (count === 1) return screenW;
-                            return screenW / 2;
+                            if (count === 1) return masterW;
+                            return (idx === 0) ? masterW : stackW;
                         }
 
-                        // Логика Высоты
-                        // Одно окно -> вся высота
-                        // Мастер (0-й) -> вся высота
-                        // Остальные -> высота / (количество - 1)
                         height: {
-                            if (count === 1) return screenH;
-                            if (idx === 0) return screenH;
-                            return screenH / (count - 1);
+                            if (count === 1) return availH;
+                            if (idx === 0) return availH;    // мастер — вся доступная высота
+                            return stackItemH;               // элемент стека — равные доли + зазоры
                         }
 
                         Behavior on x { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
