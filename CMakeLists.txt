@@ -13,7 +13,6 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 COMPONENTS REQUIRED Core Qml Quick WaylandCompositor )
-find_package(Qt6 REQUIRED COMPONENTS Core)
 
 file(GLOB SRCS "src/*.cpp")
 file(GLOB HEADERS "src/*.hpp")
@@ -44,7 +43,6 @@ target_link_libraries(appTemplateWaylandCompositor PRIVATE
     Qt6::WaylandCompositor
     Qt6::Qml
 )
-target_link_libraries(appTemplateWaylandCompositor PRIVATE Qt6::Core)
 
 include(GNUInstallDirs)
 install(TARGETS appTemplateWaylandCompositor
