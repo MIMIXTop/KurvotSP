@@ -47,7 +47,6 @@ QtShellChrome {
         z: -1 
     }
 
-    //! [leftResizeHandle]
     Rectangle {
         id: leftResizeHandle
         color: borderColor
@@ -58,7 +57,6 @@ QtShellChrome {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
     }
-    //! [leftResizeHandle]
 
     Rectangle {
         id: rightResizeHandle
