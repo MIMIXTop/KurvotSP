@@ -17,19 +17,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProcessManager>("Launcher", 1, 0, "Launcher");
     qmlRegisterType<CompositorModel>("MyModel", 1, 0, "MyModel");
     
-    QQmlApplicationEngine engine;
-    
-    QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreationFailed,
-        &app,
-        []() { 
-            Loger::log("QML object creation failed, exiting application");
-            QCoreApplication::exit(-1); 
-        },
-        Qt::QueuedConnection);
-        
-    engine.loadFromModule("TemplateWaylandCompositor", "Main");
+    QQmlApplicationEngine engine(QUrl("qrc:///src/QmlSource/Main.qml"));
 
     return app.exec();
 }

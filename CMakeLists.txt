@@ -22,12 +22,18 @@ qt_add_executable(appTemplateWaylandCompositor
     ${HEADERS}
 )
 
-qt_add_qml_module(appTemplateWaylandCompositor
-    URI TemplateWaylandCompositor
-    VERSION 1.0
-    QML_FILES
-        src/QmlSource/Main.qml
-        QML_FILES src/QmlSource/Background.qml
+file(GLOB QT_RESOURCE LIST_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/QmlSource/*.qml")
+
+set(qt_resource_files
+    "src/Resource/background.jpg"
+)
+
+qt6_add_resources(appTemplateWaylandCompositor "appTemplateWaylandCompositor"
+    PREFIX
+        "/"
+    FILES
+        ${qt_resource_files}
+        ${QT_RESOURCE}
 )
 
 set_target_properties(appTemplateWaylandCompositor PROPERTIES
