@@ -52,6 +52,13 @@ WaylandOutput {
                 }
             }
 
+            WaylandCursorItem {
+                inputEventsEnabled: false
+                x: mouseTracker.mouseX
+                y: mouseTracker.mouseY
+                seat: output.compositor.defaultSeat
+            }
+
             Image {
                 id: background
 
@@ -74,6 +81,23 @@ WaylandOutput {
                         id: appContainer
                         shellSurface: model.shellSurface
                         layoutConfig: background
+                        onRequestActivate: {
+                            background.activateSurface(model.shellSurface)
+                        }
+                    }
+                }
+
+                function activateSurface(targetSurface) {
+                    for (var i = 0; i < myModel.count; ++i) {
+                        var item = myModel.get(i);
+                        var surface = item.shellSurface;
+                        if (surface && surface.toplevel) {
+                             if (surface === targetSurface) {
+                                 surface.toplevel.sendConfigure(Qt.size(0,0), [XdgToplevel.Activated]);
+                             } else {
+                                 surface.toplevel.sendConfigure(Qt.size(0,0), []);
+                             }
+                        }
                     }
                 }
             }

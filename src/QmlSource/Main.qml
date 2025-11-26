@@ -53,6 +53,7 @@ WaylandCompositor {
         preferredMode: XdgToplevel.ServerSideDecoration
     }
 
-
+    TextInputManager {}
+    QtTextInputMethodManager {}
 }
 

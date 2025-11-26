@@ -30,10 +30,27 @@ QtShellChrome {
         return availH / n;
     }
 
+    signal requestActivate()
+
+    readonly property bool isWindowActive: shellSurface && shellSurface.toplevel && shellSurface.toplevel.activated
+    readonly property color activeColor: "green"
+    readonly property color inactiveColor: "gray"
+    readonly property color borderColor: isWindowActive ? activeColor : inactiveColor
+
+    MouseArea {
+        anchors.fill: parent
+        propagateComposedEvents: true
+        onPressed: (mouse) => {
+            requestActivate()
+            mouse.accepted = false
+        }
+        z: -1 
+    }
+
     //! [leftResizeHandle]
     Rectangle {
         id: leftResizeHandle
-        color: "gray"
+        color: borderColor
         width: visible ? 5 : 0
         anchors.topMargin: 5
         anchors.bottomMargin: 5
@@ -45,7 +62,7 @@ QtShellChrome {
 
     Rectangle {
         id: rightResizeHandle
-        color: "gray"
+        color: borderColor
         width: visible ? 5 : 0
         anchors.topMargin: 5
         anchors.bottomMargin: 5
@@ -56,7 +73,7 @@ QtShellChrome {
 
     Rectangle {
         id: topResizeHandle
-        color: "gray"
+        color: borderColor
         height: visible ? 5 : 0
         anchors.leftMargin: 5
         anchors.rightMargin: 5
@@ -67,7 +84,7 @@ QtShellChrome {
 
     Rectangle {
         id: bottomResizeHandle
-        color: "gray"
+        color: borderColor
         height: visible ? 5 : 0
         anchors.leftMargin: 5
         anchors.rightMargin: 5
@@ -78,7 +95,7 @@ QtShellChrome {
 
     Rectangle {
         id: topLeftResizeHandle
-        color: "gray"
+        color: borderColor
         height: 5
         width: 5
         anchors.left: parent.left
@@ -87,7 +104,7 @@ QtShellChrome {
 
     Rectangle {
         id: topRightResizeHandle
-        color: "gray"
+        color: borderColor
         height: 5
         width: 5
         anchors.right: parent.right
@@ -96,7 +113,7 @@ QtShellChrome {
 
     Rectangle {
         id: bottomLeftResizeHandle
-        color: "gray"
+        color: borderColor
         height: 5
         width: 5
         anchors.left: parent.left
@@ -106,7 +123,7 @@ QtShellChrome {
 
     Rectangle {
         id: bottomRightResizeHandle
-        color: "gray"
+        color: borderColor
         height: 5
         width: 5
         anchors.right: parent.right
