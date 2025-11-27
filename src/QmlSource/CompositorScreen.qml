@@ -12,7 +12,6 @@ WaylandOutput {
                                           "wayland")
                                       || Qt.platform.pluginName === "xcb"
 
-    //! [handleShellSurface]
     property ListModel shellSurfaces: ListModel {}
     function handleShellSurface(shellSurface) {
         shellSurfaces.append({
@@ -57,6 +56,20 @@ WaylandOutput {
                 x: mouseTracker.mouseX
                 y: mouseTracker.mouseY
                 seat: output.compositor.defaultSeat
+            }
+
+            Row {
+                id: taskbar
+                height: 40
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+
+                Rectangle{
+                    id: tt
+                    color: "black"
+                    anchors.fill: parent.fill
+                }
             }
 
             Image {

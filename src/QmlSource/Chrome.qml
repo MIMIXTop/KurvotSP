@@ -48,11 +48,26 @@ QtShellChrome {
     }
 
     Rectangle {
+        id: windowBackground
+        anchors.fill: parent
+        color: "transparent" 
+        radius: 8
+        z: -1
+
+        Rectangle {
+            id: contentArea
+            anchors.fill: parent
+            anchors.margins: 6
+            color: borderColor
+            radius: 4
+        }
+    }
+
+    Rectangle {
         id: leftResizeHandle
-        color: borderColor
-        width: visible ? 5 : 0
-        anchors.topMargin: 5
-        anchors.bottomMargin: 5
+        width: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -60,10 +75,9 @@ QtShellChrome {
 
     Rectangle {
         id: rightResizeHandle
-        color: borderColor
-        width: visible ? 5 : 0
-        anchors.topMargin: 5
-        anchors.bottomMargin: 5
+        width: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -71,10 +85,9 @@ QtShellChrome {
 
     Rectangle {
         id: topResizeHandle
-        color: borderColor
-        height: visible ? 5 : 0
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
+        height: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.right: parent.right
@@ -82,10 +95,9 @@ QtShellChrome {
 
     Rectangle {
         id: bottomResizeHandle
-        color: borderColor
-        height: visible ? 5 : 0
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
+        height: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.right: parent.right
@@ -93,27 +105,30 @@ QtShellChrome {
 
     Rectangle {
         id: topLeftResizeHandle
-        color: borderColor
-        height: 5
-        width: 5
+        height: 10
+        width: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.left: parent.left
         anchors.top: parent.top
     }
 
     Rectangle {
         id: topRightResizeHandle
-        color: borderColor
-        height: 5
-        width: 5
+        height: 10
+        width: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.right: parent.right
         anchors.top: parent.top
     }
 
     Rectangle {
         id: bottomLeftResizeHandle
-        color: borderColor
-        height: 5
-        width: 5
+        height: 10
+        width: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.left: parent.left
         anchors.bottom: parent.bottom
     }
@@ -121,9 +136,10 @@ QtShellChrome {
 
     Rectangle {
         id: bottomRightResizeHandle
-        color: borderColor
-        height: 5
-        width: 5
+        height: 10
+        width: 10
+        color: "transparent"
+        border.color: "transparent"
         anchors.right: parent.right
         anchors.bottom: parent.bottom
     }
@@ -160,18 +176,26 @@ QtShellChrome {
         return stackItemH;
     }
 
-    ShellSurfaceItem {
-        id: shellSurfaceItemId
+    Item {
+        id: contentContainer
         anchors.top: topResizeHandle.bottom
         anchors.left: leftResizeHandle.right
         anchors.bottom: bottomResizeHandle.top
         anchors.right: rightResizeHandle.left
+        anchors.topMargin: 0
+        anchors.leftMargin: 0
+        anchors.bottomMargin: 0
+        anchors.rightMargin: 0
 
+        ShellSurfaceItem {
+            id: shellSurfaceItemId
+            anchors.fill: parent
 
-        moveItem: chrome
+            moveItem: chrome
 
-        staysOnBottom: shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnBottomHint)
-        staysOnTop: !staysOnBottom && shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnTopHint)
+            staysOnBottom: shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnBottomHint)
+            staysOnTop: !staysOnBottom && shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnTopHint)
+        }
     }
 
     Behavior on x { 
@@ -180,18 +204,21 @@ QtShellChrome {
             easing.type: Easing.OutQuad 
         } 
     }
+
     Behavior on y { 
         NumberAnimation { 
             duration: 300; 
             easing.type: Easing.OutQuad 
         } 
     }
+
     Behavior on width { 
         NumberAnimation { 
             duration: 300; 
             easing.type: Easing.OutQuad 
         } 
     }
+
     Behavior on height { 
         NumberAnimation { 
             duration: 300; 
