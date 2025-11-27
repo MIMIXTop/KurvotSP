@@ -27,7 +27,7 @@ file(GLOB QT_RESOURCE LIST_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_SOURCE_DIR
 set(qt_resource_files
     "src/Resource/background.jpg"
     "src/Resource/48.png"
-    "src/Resource/64.png"
+    "src/Resource/reboot-48.png"
 )
 
 qt6_add_resources(appTemplateWaylandCompositor "appTemplateWaylandCompositor"
