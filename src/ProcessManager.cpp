@@ -51,6 +51,26 @@ void ProcessManager::launchTermunal(const QByteArray &socketName) {
   }
 }
 
+void ProcessManager::shutdown() {
+  Loger::log("ProcessManager::shutdown called - initiating system shutdown");
+  qInfo() << "Initiating system shutdown...";
+
+  QProcess *shutdownProcess = new QProcess();
+
+  // Используем systemctl для выключения системы
+  shutdownProcess->start("systemctl", QStringList() << "poweroff");
+
+  if (!shutdownProcess->waitForStarted()) {
+    std::string errorMsg = "Failed to start shutdown: " +
+                           shutdownProcess->errorString().toStdString();
+    Loger::log(errorMsg);
+    qWarning() << "Failed to initiate shutdown:"
+               << shutdownProcess->errorString();
+  } else {
+    Loger::log("Shutdown command executed successfully");
+  }
+}
+
 void ProcessManager::iterate_children(pid_t pid,
                                       std::vector<pid_t> &all_children) {
   std::string taskDir = "/proc/" + std::to_string(pid) + "/task";
