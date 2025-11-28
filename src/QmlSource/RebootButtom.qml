@@ -6,10 +6,10 @@ Rectangle {
 
     Image {
         id: rebootButtomImg
-        source: "qrc:/src/Resource/reboot-48.png"
+        source: "qrc:/src/Resource/reboot-24.png"
         anchors.centerIn: parent
-        width: 48
-        height: 48
+        width: 24
+        height: 24
         fillMode: Image.PreserveAspectFit
         opacity: mouseArea.containsMouse ? 1.0 : 0.7
 

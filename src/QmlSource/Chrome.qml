@@ -12,25 +12,32 @@ QtShellChrome {
 
     property int count: myModel.count
     property int idx: index
-    
+
     property real screenW: win.width
     property real screenH: win.height
-    
+
     property real availW: screenW - (layoutConfig.marginLeft + layoutConfig.marginRight)
     property real availH: screenH - (layoutConfig.marginTop + layoutConfig.marginBottom)
-    
-    property real masterW: (count === 1)
-                           ? availW
-                           : availW / 2
+
+    property real masterW: (count === 1) ? availW : availW / 2
     property real stackW: masterW
-    
+
     property real stackItemH: {
-        if (count <= 1) return availH;
+        if (count <= 1)
+            return availH;
         var n = count - 1;
         return availH / n;
     }
 
-    signal requestActivate()
+    signal requestActivate
+
+    Component.onCompleted: {
+        requestActivate();
+        console.log("Chrome: Component completed");
+        console.log("Chrome: shellSurface", shellSurface);
+        console.log("Chrome: shellSurface.toplevel", shellSurface.toplevel);
+        console.log("Chrome: shellSurface.toplevel.activated", shellSurface.toplevel.activated);
+    }
 
     readonly property bool isWindowActive: shellSurface && shellSurface.toplevel && shellSurface.toplevel.activated
     readonly property color activeColor: "green"
@@ -40,17 +47,17 @@ QtShellChrome {
     MouseArea {
         anchors.fill: parent
         propagateComposedEvents: true
-        onPressed: (mouse) => {
-            requestActivate()
-            mouse.accepted = false
+        onPressed: mouse => {
+            requestActivate();
+            mouse.accepted = false;
         }
-        z: -1 
+        z: -1
     }
 
     Rectangle {
         id: windowBackground
         anchors.fill: parent
-        color: "transparent" 
+        color: "transparent"
         radius: 8
         z: -1
 
@@ -133,7 +140,6 @@ QtShellChrome {
         anchors.bottom: parent.bottom
     }
 
-
     Rectangle {
         id: bottomRightResizeHandle
         height: 10
@@ -148,31 +154,38 @@ QtShellChrome {
     rightResizeHandle: rightResizeHandle
     topResizeHandle: topResizeHandle
     bottomResizeHandle: bottomResizeHandle
-    topLeftResizeHandle:  topLeftResizeHandle
+    topLeftResizeHandle: topLeftResizeHandle
     topRightResizeHandle: topRightResizeHandle
     bottomLeftResizeHandle: bottomLeftResizeHandle
     bottomRightResizeHandle: bottomRightResizeHandle
 
     x: {
-        if (count === 1) return layoutConfig.marginLeft;
-        if (idx === 0) return layoutConfig.marginLeft;
+        if (count === 1)
+            return layoutConfig.marginLeft;
+        if (idx === 0)
+            return layoutConfig.marginLeft;
         return layoutConfig.marginLeft + masterW;
     }
 
     y: {
-        if (count === 1) return layoutConfig.marginTop;
-        if (idx === 0) return layoutConfig.marginTop;
+        if (count === 1)
+            return layoutConfig.marginTop;
+        if (idx === 0)
+            return layoutConfig.marginTop;
         return layoutConfig.marginTop + (idx - 1) * stackItemH;
     }
 
     width: {
-        if (count === 1) return masterW;
+        if (count === 1)
+            return masterW;
         return (idx === 0) ? masterW : stackW;
     }
 
     height: {
-        if (count === 1) return availH;
-        if (idx === 0) return availH;
+        if (count === 1)
+            return availH;
+        if (idx === 0)
+            return availH;
         return stackItemH;
     }
 
@@ -193,36 +206,37 @@ QtShellChrome {
 
             moveItem: chrome
 
+
             staysOnBottom: shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnBottomHint)
             staysOnTop: !staysOnBottom && shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnTopHint)
         }
     }
 
-    Behavior on x { 
-        NumberAnimation { 
-            duration: 300; 
-            easing.type: Easing.OutQuad 
-        } 
+    Behavior on x {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
     }
 
-    Behavior on y { 
-        NumberAnimation { 
-            duration: 300; 
-            easing.type: Easing.OutQuad 
-        } 
+    Behavior on y {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
     }
 
-    Behavior on width { 
-        NumberAnimation { 
-            duration: 300; 
-            easing.type: Easing.OutQuad 
-        } 
+    Behavior on width {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
     }
 
-    Behavior on height { 
-        NumberAnimation { 
-            duration: 300; 
-            easing.type: Easing.OutQuad 
-        } 
+    Behavior on height {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
     }
 }

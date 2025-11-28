@@ -8,15 +8,15 @@ import Clock 1.0
 
 Image {
     id: background
-    
+
     property int marginLeft: 0
     property int marginRight: 0
     property int marginTop: 40
     property int marginBottom: 0
-    
+
     property int columnGap: 0
     property int rowGap: 0
-    
+
     //fillMode: Image.Tile
     Repeater {
         model: myModel
@@ -29,7 +29,7 @@ Image {
             }
         }
     }
-    
+
     function activateSurface(targetSurface) {
         for (var i = 0; i < myModel.count; ++i) {
             var item = myModel.get(i);
