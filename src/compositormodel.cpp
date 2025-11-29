@@ -31,19 +31,28 @@ void CompositorModel::append(QWaylandXdgSurface *surface) {
   m_surfaces.append(surface);
   endInsertRows();
   emit countChanged();
-  emit requestActivate(surface);
+  int index = m_surfaces.size() - 1;
+  emit requestActivate(surface, index);
+
+  connect(surface, &QObject::destroyed, this, [this, surface]() {
+    for (int i = 0; i < m_surfaces.size(); ++i) {
+      if (m_surfaces.at(i) == surface) {
+        remove(i);
+        break;
+      }
+    }
+  });
 }
 
 void CompositorModel::remove(int index) {
   beginRemoveRows({}, index, index);
   m_surfaces.removeAt(index);
   endRemoveRows();
+  emit countChanged();
 }
 
 void CompositorModel::activate(int index) {
-  if (index >= 0 && index < m_surfaces.size()) {
-    emit requestActivate(m_surfaces.at(index));
-  }
+  emit requestActivate(m_surfaces.at(index), index);
 }
 
 QWaylandXdgSurface *CompositorModel::at(int index) const {

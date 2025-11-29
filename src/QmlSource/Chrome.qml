@@ -48,6 +48,7 @@ QtShellChrome {
         anchors.fill: parent
         propagateComposedEvents: true
         onPressed: mouse => {
+            console.log("MouseArea in Chrome PRESSED!");
             requestActivate();
             mouse.accepted = false;
         }
@@ -209,6 +210,17 @@ QtShellChrome {
 
             staysOnBottom: shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnBottomHint)
             staysOnTop: !staysOnBottom && shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnTopHint)
+
+            // Добавляем обработчик нажатия мыши
+            MouseArea {
+                anchors.fill: parent
+                propagateComposedEvents: true
+                onPressed: mouse => {
+                    console.log("ShellSurfaceItem MouseArea PRESSED!");
+                    requestActivate();
+                    mouse.accepted = false;
+                }
+            }
         }
     }
 

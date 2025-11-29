@@ -16,6 +16,10 @@ WaylandOutput {
         });
     }
 
+    signal requestCloseCurrentWindow
+
+    property var windowModel
+
     sizeFollowsWindow: output.isNestedCompositor
 
     Launcher {
@@ -52,6 +56,14 @@ WaylandOutput {
                 }
             }
 
+            Shortcut {
+                sequence: "Ctrl+Q"
+                onActivated: {
+                    console.log("Ctrl+Q pressed - requesting close current window");
+                    output.requestCloseCurrentWindow();
+                }
+            }
+
             WaylandCursorItem {
                 inputEventsEnabled: false
                 x: mouseTracker.mouseX
@@ -72,6 +84,8 @@ WaylandOutput {
                 anchors.fill: parent
                 smooth: true
                 source: "qrc:/src/Resource/background.jpg"
+                windowModel: output.windowModel
+                compositor: output.compositor
             }
         }
     }

@@ -17,23 +17,30 @@ Image {
     property int columnGap: 0
     property int rowGap: 0
 
+    property var windowModel
+    property var compositor
+
     //fillMode: Image.Tile
     Repeater {
-        model: myModel
+        model: windowModel
         Chrome {
             id: appContainer
             shellSurface: model.shellSurface
             layoutConfig: background
-            /*onRequestActivate: {
-                myModel.activate(index);
+            onRequestActivate: {
+                console.log("=== Window Click (BEFORE focus) ===");
+                console.log("Clicked window index:", index);
+                console.log("===================================");
+
+                windowModel.activate(index);
                 background.activateSurface(model.shellSurface);
-            }*/
+            }
         }
     }
 
     function activateSurface(targetSurface) {
-        for (var i = 0; i < myModel.count; ++i) {
-            var item = myModel.at(i);
+        for (var i = 0; i < windowModel.count; ++i) {
+            var item = windowModel.at(i);
             var surface = item;
             if (surface && surface.toplevel) {
                 if (surface === targetSurface) {
