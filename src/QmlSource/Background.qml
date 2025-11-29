@@ -24,16 +24,17 @@ Image {
             id: appContainer
             shellSurface: model.shellSurface
             layoutConfig: background
-            onRequestActivate: {
+            /*onRequestActivate: {
+                myModel.activate(index);
                 background.activateSurface(model.shellSurface);
-            }
+            }*/
         }
     }
 
     function activateSurface(targetSurface) {
         for (var i = 0; i < myModel.count; ++i) {
-            var item = myModel.get(i);
-            var surface = item.shellSurface;
+            var item = myModel.at(i);
+            var surface = item;
             if (surface && surface.toplevel) {
                 if (surface === targetSurface) {
                     surface.toplevel.sendConfigure(Qt.size(0, 0), [XdgToplevel.Activated]);

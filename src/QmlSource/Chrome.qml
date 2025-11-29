@@ -205,7 +205,7 @@ QtShellChrome {
             anchors.fill: parent
 
             moveItem: chrome
-
+            focus: true
 
             staysOnBottom: shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnBottomHint)
             staysOnTop: !staysOnBottom && shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnTopHint)
