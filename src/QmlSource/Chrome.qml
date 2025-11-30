@@ -217,7 +217,6 @@ QtShellChrome {
             staysOnBottom: shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnBottomHint)
             staysOnTop: !staysOnBottom && shellSurface && (shellSurface.windowFlags & Qt.WindowStaysOnTopHint)
 
-            // Добавляем обработчик нажатия мыши
             MouseArea {
                 anchors.fill: parent
                 propagateComposedEvents: true

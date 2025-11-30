@@ -54,7 +54,7 @@ WaylandOutput {
             }
 
             Shortcut {
-                sequence: "F1" // Keep F1 as hardcoded fallback or add to config if needed, but user didn't ask for it specifically to be configurable yet, but let's stick to the plan. Wait, plan said "Suggestion: Add key_closeWindow". I added it to config. Let's use it.
+                sequence: "F1"
                 onActivated: {
                     console.log("F1 pressed - closing window");
                     win.close();

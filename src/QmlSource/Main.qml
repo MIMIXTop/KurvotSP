@@ -27,7 +27,6 @@ WaylandCompositor {
             var focusedSurface = compositor.defaultSeat.keyboardFocus;
             var focusFound = false;
 
-            // Check if the currently focused surface is still in the model
             for (var j = 0; j < myModel.count; j++) {
                 if (myModel.at(j).surface === focusedSurface) {
                     focusFound = true;
@@ -71,7 +70,6 @@ WaylandCompositor {
                 lastActiveIndex = index;
                 console.log("lastActiveIndex set to:", lastActiveIndex);
 
-                // Выводим статистику ПОСЛЕ установки фокуса
                 console.log("\n=== Window Click Statistics (AFTER focus set) ===");
                 console.log("Activated window index:", index);
                 console.log("Activated window object:", surface);
@@ -131,7 +129,6 @@ WaylandCompositor {
         onToplevelCreated: (toplevel, xdgSurface) => {
             myModel.append(xdgSurface);
 
-            // Automatically activate first window
             if (myModel.count === 1) {
                 console.log("Auto-activating first window");
                 myModel.activate(0);
