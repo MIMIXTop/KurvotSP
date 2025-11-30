@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 #include <QObject>
 #include <QWaylandXdgSurface>
+#include <qstringview.h>
 
 class CompositorModel : public QAbstractListModel {
   Q_OBJECT
@@ -20,11 +21,12 @@ public:
   Q_INVOKABLE void append(QWaylandXdgSurface *surface);
   Q_INVOKABLE void remove(int index);
   Q_INVOKABLE QWaylandXdgSurface *at(int index) const;
-   Q_INVOKABLE void activate(int index);
+  Q_INVOKABLE void activate(int index);
+
 signals:
   void countChanged();
 
-   void requestActivate(QWaylandXdgSurface *surface, int index);
+  void requestActivate(QWaylandXdgSurface *surface, int index);
 
 private:
   QList<QWaylandXdgSurface *> m_surfaces;

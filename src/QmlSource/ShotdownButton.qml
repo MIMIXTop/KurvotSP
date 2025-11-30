@@ -1,8 +1,13 @@
 import QtQuick
 import QtQuick.Controls
+import Launcher 1.0
 
 Rectangle {
     id: powerButton
+
+    Launcher {
+        id: processManager
+    }
 
     Image {
         id: powerOffOnButton
@@ -28,6 +33,7 @@ Rectangle {
 
         onClicked: {
             console.log("Shutdown button clicked!");
+            processManager.shutdown();
         }
     }
 }

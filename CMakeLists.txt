@@ -24,6 +24,15 @@ qt_add_executable(appTemplateWaylandCompositor
     ${HEADERS}
 )
 
+# Layer Shell disabled due to linkage issues
+# qt6_generate_wayland_protocol_server_sources(appTemplateWaylandCompositor
+#     FILES ${CMAKE_CURRENT_SOURCE_DIR}/protocols/wlr-layer-shell-unstable-v1.xml
+# )
+# 
+# target_sources(appTemplateWaylandCompositor PRIVATE
+#     ${CMAKE_CURRENT_BINARY_DIR}/wayland-wlr-layer-shell-unstable-v1-protocol.c
+# )
+
 file(GLOB QT_RESOURCE LIST_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/QmlSource/*.qml")
 
 set(qt_resource_files

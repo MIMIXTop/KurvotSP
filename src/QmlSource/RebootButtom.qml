@@ -1,8 +1,13 @@
 import QtQuick
 import QtQuick.Controls
+import Launcher 1.0
 
 Rectangle {
     id: rebootButtom
+
+    Launcher {
+        id: processManager
+    }
 
     Image {
         id: rebootButtomImg
@@ -28,6 +33,7 @@ Rectangle {
 
         onClicked: {
             console.log("Reboot button clicked!");
+            processManager.reboot();
         }
     }
 }

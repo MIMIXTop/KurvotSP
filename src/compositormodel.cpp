@@ -1,6 +1,8 @@
 #include "compositormodel.hpp"
+#include "loger.hpp"
 #include <QList>
 #include <QVariant>
+#include <cmath>
 
 CompositorModel::CompositorModel(QObject *parent)
     : QAbstractListModel(parent) {}
@@ -58,4 +60,4 @@ void CompositorModel::activate(int index) {
 QWaylandXdgSurface *CompositorModel::at(int index) const {
   return index >= 0 && index < m_surfaces.size() ? m_surfaces.at(index)
                                                  : nullptr;
-}
+} 

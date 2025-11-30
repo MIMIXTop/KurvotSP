@@ -64,6 +64,14 @@ WaylandOutput {
                 }
             }
 
+            Shortcut {
+                sequence: "F2"
+                onActivated: {
+                    launcher.launchProgram("wofi --show drun", output.compositor.socketName);
+                    console.log("F2 pressed - launching rofi");
+                }
+            }
+
             WaylandCursorItem {
                 inputEventsEnabled: false
                 x: mouseTracker.mouseX
