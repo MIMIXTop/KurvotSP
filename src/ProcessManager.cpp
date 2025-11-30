@@ -23,6 +23,13 @@ void ProcessManager::launchTermunal(const QByteArray &socketName) {
   env.insert("WAYLAND_DISPLAY", QString::fromLocal8Bit(socketName));
   terminal->setProcessEnvironment(env);
 
+      // КРИТИЧЕСКИ ВАЖНО для GTK4 приложений
+    env.insert("GSK_RENDERER", "cairo");
+    env.insert("GDK_BACKEND", "wayland");
+    
+    // Для предотвращения конфликтов EGL
+    env.insert("EGL_PLATFORM", "wayland");
+
   Loger::log("Starting konsole terminal with WAYLAND_DISPLAY=" +
              std::string(socketName.constData()));
   terminal->start("konsole", QStringList());
@@ -35,6 +42,7 @@ void ProcessManager::launchTermunal(const QByteArray &socketName) {
   } else {
     Loger::log("Terminal started successfully");
   }
+
 }
 
 void ProcessManager::shutdown() {

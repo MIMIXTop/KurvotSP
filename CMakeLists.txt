@@ -39,6 +39,7 @@ set(qt_resource_files
     "src/Resource/background.jpg"
     "src/Resource/shotdown-24.png"
     "src/Resource/reboot-24.png"
+    "compositor.conf"
 )
 
 qt6_add_resources(appTemplateWaylandCompositor "appTemplateWaylandCompositor"

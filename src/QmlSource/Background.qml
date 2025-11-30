@@ -6,21 +6,33 @@ import Launcher 1.0
 import MyModel 1.0
 import Clock 1.0
 
-Image {
+import ConfigManager 1.0
+
+Rectangle {
     id: background
+    color: config.backgroundColor
 
-    property int marginLeft: 0
-    property int marginRight: 0
+    ConfigManager {
+        id: config
+    }
+
+    Image {
+        anchors.fill: parent
+        source: config.backgroundImage
+        fillMode: Image.PreserveAspectCrop
+        visible: config.backgroundImage !== ""
+    }
+
+    property int marginLeft: config.windowSpacing
+    property int marginRight: config.windowSpacing
     property int marginTop: 40
-    property int marginBottom: 0
+    property int marginBottom: config.windowSpacing
 
-    property int columnGap: 0
-    property int rowGap: 0
+    property int columnGap: config.windowSpacing
+    property int rowGap: config.windowSpacing
 
     property var windowModel
     property var compositor
-
-    //fillMode: Image.Tile
     Repeater {
         model: windowModel
         Chrome {

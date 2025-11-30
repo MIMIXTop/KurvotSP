@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtWayland.Compositor
 import QtWayland.Compositor.XdgShell
 import Launcher 1.0
+import ConfigManager 1.0
 
 WaylandOutput {
     id: output
@@ -40,16 +41,20 @@ WaylandOutput {
             anchors.fill: parent
             windowSystemCursorEnabled: output.isNestedCompositor
 
+            ConfigManager {
+                id: config
+            }
+
             Shortcut {
-                sequence: "F12"
+                sequence: config.keyTerminal
                 onActivated: {
-                    console.log("F12 pressed - launching terminal");
-                    launcher.launchTermunal(output.compositor.socketName);
+                    console.log(config.keyTerminal + " pressed - launching terminal");
+                    launcher.launchProgram(config.terminal, output.compositor.socketName);
                 }
             }
 
             Shortcut {
-                sequence: "F1"
+                sequence: "F1" // Keep F1 as hardcoded fallback or add to config if needed, but user didn't ask for it specifically to be configurable yet, but let's stick to the plan. Wait, plan said "Suggestion: Add key_closeWindow". I added it to config. Let's use it.
                 onActivated: {
                     console.log("F1 pressed - closing window");
                     win.close();
@@ -57,18 +62,42 @@ WaylandOutput {
             }
 
             Shortcut {
-                sequence: "Ctrl+Q"
+                sequence: config.keyCloseWindow
                 onActivated: {
-                    console.log("Ctrl+Q pressed - requesting close current window");
+                    console.log(config.keyCloseWindow + " pressed - requesting close current window");
                     output.requestCloseCurrentWindow();
                 }
             }
 
             Shortcut {
-                sequence: "F2"
+                sequence: config.keyWofi
                 onActivated: {
-                    launcher.launchProgram("wofi --show drun", output.compositor.socketName);
-                    console.log("F2 pressed - launching rofi");
+                    launcher.launchProgram(config.wofi, output.compositor.socketName);
+                    console.log(config.keyWofi + " pressed - launching wofi");
+                }
+            }
+
+            Shortcut {
+                sequence: config.keyFolderManager
+                onActivated: {
+                    launcher.launchProgram(config.folderManager, output.compositor.socketName);
+                    console.log(config.keyFolderManager + " pressed - launching folder manager");
+                }
+            }
+
+            Shortcut {
+                sequence: config.keyBrowser
+                onActivated: {
+                    launcher.launchProgram(config.browser, output.compositor.socketName);
+                    console.log(config.keyBrowser + " pressed - launching browser");
+                }
+            }
+
+            Shortcut {
+                sequence: config.keyCodeRedactor
+                onActivated: {
+                    launcher.launchProgram(config.codeRedactor, output.compositor.socketName);
+                    console.log(config.keyCodeRedactor + " pressed - launching code redactor");
                 }
             }
 
@@ -90,8 +119,6 @@ WaylandOutput {
             Background {
                 id: background
                 anchors.fill: parent
-                smooth: true
-                source: "qrc:/src/Resource/background.jpg"
                 windowModel: output.windowModel
                 compositor: output.compositor
             }

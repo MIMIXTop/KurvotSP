@@ -4,8 +4,14 @@ import QtQuick.Layouts
 import QtWayland.Compositor
 import QtWayland.Compositor.QtShell
 
+import ConfigManager 1.0
+
 QtShellChrome {
     id: chrome
+
+    ConfigManager {
+        id: config
+    }
 
     property alias shellSurface: shellSurfaceItemId.shellSurface
     property var layoutConfig
@@ -40,7 +46,7 @@ QtShellChrome {
     }
 
     readonly property bool isWindowActive: shellSurface && shellSurface.toplevel && shellSurface.toplevel.activated
-    readonly property color activeColor: "green"
+    readonly property color activeColor: config.focusColor
     readonly property color inactiveColor: "gray"
     readonly property color borderColor: isWindowActive ? activeColor : inactiveColor
 
@@ -65,7 +71,7 @@ QtShellChrome {
         Rectangle {
             id: contentArea
             anchors.fill: parent
-            anchors.margins: 6
+            anchors.margins: 10 - config.borderSize
             color: borderColor
             radius: 4
         }

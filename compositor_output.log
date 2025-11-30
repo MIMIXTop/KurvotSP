@@ -1,0 +1,289 @@
+qml: WaylandCompositor initialized with socket: wayland-1
+Config file changed: "compositor.conf"
+Config file changed: "compositor.conf"
+qml: F12 pressed - launching terminal
+Compositor running on socket: "wayland-1"
+Command:  "konsole"
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: Chrome: Component completed
+qml: Chrome: shellSurface QWaylandXdgSurface(0x5611a9df5ed0)
+qml: Chrome: shellSurface.toplevel QWaylandXdgToplevel(0x5611a9ebd3f0)
+qml: Chrome: shellSurface.toplevel.activated false
+qml: --- Window Statistics ---
+qml: Total windows: 1
+qml: Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: false
+qml: -------------------------
+qml: Switching focus to new surface, index: 0
+qml: lastActiveIndex set to: 0
+qml: 
+=== Window Click Statistics (AFTER focus set) ===
+qml: Activated window index: 0
+qml: Activated window object: QWaylandXdgSurface(0x5611a9df5ed0)
+qml: 
+All windows:
+qml:   Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: true
+qml: 
+Activated window details:
+qml:   Surface: QWaylandQuickSurface(0x5611a9df59a0)
+qml:   Toplevel: QWaylandXdgToplevel(0x5611a9ebd3f0)
+qml:   Toplevel.activated: false
+qml: 
+Current keyboard focus: QWaylandQuickSurface(0x5611a9df59a0)
+qml: Focus matches activated window: true
+qml: =================================================
+
+qml: Auto-activating first window
+qml: Switching focus to new surface, index: 0
+qml: lastActiveIndex set to: 0
+qml: 
+=== Window Click Statistics (AFTER focus set) ===
+qml: Activated window index: 0
+qml: Activated window object: QWaylandXdgSurface(0x5611a9df5ed0)
+qml: 
+All windows:
+qml:   Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: true
+qml: 
+Activated window details:
+qml:   Surface: QWaylandQuickSurface(0x5611a9df59a0)
+qml:   Toplevel: QWaylandXdgToplevel(0x5611a9ebd3f0)
+qml:   Toplevel.activated: false
+qml: 
+Current keyboard focus: QWaylandQuickSurface(0x5611a9df59a0)
+qml: Focus matches activated window: true
+qml: =================================================
+
+qml: F12 pressed - launching terminal
+Compositor running on socket: "wayland-1"
+Command:  "konsole"
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: Chrome: Component completed
+qml: Chrome: shellSurface QWaylandXdgSurface(0x5611aa004d00)
+qml: Chrome: shellSurface.toplevel QWaylandXdgToplevel(0x5611aa3ed590)
+qml: Chrome: shellSurface.toplevel.activated false
+qml: --- Window Statistics ---
+qml: Total windows: 2
+qml: Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: true
+qml: Window 1: QWaylandXdgSurface(0x5611aa004d00) - Focused: false
+qml: -------------------------
+qml: Switching focus to new surface, index: 1
+qml: lastActiveIndex set to: 1
+qml: 
+=== Window Click Statistics (AFTER focus set) ===
+qml: Activated window index: 1
+qml: Activated window object: QWaylandXdgSurface(0x5611aa004d00)
+qml: 
+All windows:
+qml:   Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: false
+qml:   Window 1: QWaylandXdgSurface(0x5611aa004d00) - Focused: true
+qml: 
+Activated window details:
+qml:   Surface: QWaylandQuickSurface(0x5611aa004a90)
+qml:   Toplevel: QWaylandXdgToplevel(0x5611aa3ed590)
+qml:   Toplevel.activated: false
+qml: 
+Current keyboard focus: QWaylandQuickSurface(0x5611aa004a90)
+qml: Focus matches activated window: true
+qml: =================================================
+
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+Config file changed: "compositor.conf"
+Config file changed: "compositor.conf"
+Config file changed: "compositor.conf"
+Config file changed: "compositor.conf"
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 0
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+Compositor running on socket: "wayland-1"
+Command:  "wofi --show drun"
+qml: Ctrl+R pressed - launching wofi
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 2
+qml: ===================================
+qml: Chrome: Component completed
+qml: Chrome: shellSurface QWaylandXdgSurface(0x5611aa42a380)
+qml: Chrome: shellSurface.toplevel QWaylandXdgToplevel(0x5611aa42a5f0)
+qml: Chrome: shellSurface.toplevel.activated false
+qml: --- Window Statistics ---
+qml: Total windows: 3
+qml: Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: false
+qml: Window 1: QWaylandXdgSurface(0x5611aa004d00) - Focused: true
+qml: Window 2: QWaylandXdgSurface(0x5611aa42a380) - Focused: false
+qml: -------------------------
+qml: Switching focus to new surface, index: 2
+qml: lastActiveIndex set to: 2
+qml: 
+=== Window Click Statistics (AFTER focus set) ===
+qml: Activated window index: 2
+qml: Activated window object: QWaylandXdgSurface(0x5611aa42a380)
+qml: 
+All windows:
+qml:   Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: false
+qml:   Window 1: QWaylandXdgSurface(0x5611aa004d00) - Focused: false
+qml:   Window 2: QWaylandXdgSurface(0x5611aa42a380) - Focused: true
+qml: 
+Activated window details:
+qml:   Surface: QWaylandQuickSurface(0x5611aa428a30)
+qml:   Toplevel: QWaylandXdgToplevel(0x5611aa42a5f0)
+qml:   Toplevel.activated: false
+qml: 
+Current keyboard focus: QWaylandQuickSurface(0x5611aa428a30)
+qml: Focus matches activated window: true
+qml: =================================================
+
+Received a xdg_toplevel.set_min_size request with a size larger than the maximum size
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 2
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 2
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 2
+qml: ===================================
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 2
+qml: ===================================
+qml: --- Window Statistics ---
+qml: Total windows: 2
+qml: Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: false
+qml: Window 1: QWaylandXdgSurface(0x5611aa004d00) - Focused: false
+qml: -------------------------
+qml: ShellSurfaceItem MouseArea PRESSED!
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 1
+qml: ===================================
+qml: === Window Click (BEFORE focus) ===
+qml: Clicked window index: 2
+qml: ===================================
+qml: Chrome: Component completed
+qml: Chrome: shellSurface QWaylandXdgSurface(0x5611aa40f210)
+qml: Chrome: shellSurface.toplevel QWaylandXdgToplevel(0x5611aa4603a0)
+qml: Chrome: shellSurface.toplevel.activated false
+qml: --- Window Statistics ---
+qml: Total windows: 3
+qml: Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: false
+qml: Window 1: QWaylandXdgSurface(0x5611aa004d00) - Focused: false
+qml: Window 2: QWaylandXdgSurface(0x5611aa40f210) - Focused: false
+qml: -------------------------
+qml: Switching focus to new surface, index: 2
+qml: lastActiveIndex set to: 2
+qml: 
+=== Window Click Statistics (AFTER focus set) ===
+qml: Activated window index: 2
+qml: Activated window object: QWaylandXdgSurface(0x5611aa40f210)
+qml: 
+All windows:
+qml:   Window 0: QWaylandXdgSurface(0x5611a9df5ed0) - Focused: false
+qml:   Window 1: QWaylandXdgSurface(0x5611aa004d00) - Focused: false
+qml:   Window 2: QWaylandXdgSurface(0x5611aa40f210) - Focused: true
+qml: 
+Activated window details:
+qml:   Surface: QWaylandQuickSurface(0x5611aa45e5b0)
+qml:   Toplevel: QWaylandXdgToplevel(0x5611aa4603a0)
+qml:   Toplevel.activated: false
+qml: 
+Current keyboard focus: QWaylandQuickSurface(0x5611aa45e5b0)
+qml: Focus matches activated window: true
+qml: =================================================
+
+appTemplateWaylandCompositor: ../egl-wayland/src/wayland-thread.c:87: wlExternalApiLock: Проверочное утверждение «!"failed to lock pthread mutex"» не выполнено.
