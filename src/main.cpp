@@ -17,15 +17,15 @@ int main(int argc, char *argv[]) {
   setenv("XDG_CURRENT_DESKTOP", "appTemplateWaylandCompositor", 1);
   setenv("_JAVA_AWT_WM_NONREPARENTING", "1", 1);
   setenv("MOZ_ENABLE_WAYLAND", "1", 1);
-  setenv("QT_QPA_PLATFORM", "wayland", 1);
+  // setenv("QT_QPA_PLATFORM", "wayland", 1);
   setenv("XDG_SESSION_TYPE", "wayland", 1);
 
   // ГРАФИЧЕСКИЕ настройки для Intel
-  setenv("MESA_LOADER_DRIVER_OVERRIDE", "iris", 1);
-  setenv("EGL_PLATFORM", "wayland", 1);
-  setenv("GBM_BACKEND", "nouveau", 1);
-  setenv("QT_LOGGING_RULES", "qt.wayland.compositor.debug=false", 1);
-  setenv("QT_OPENGL", "software", 1);
+  // setenv("MESA_LOADER_DRIVER_OVERRIDE", "iris", 1);
+  // setenv("EGL_PLATFORM", "wayland", 1);
+  // setenv("GBM_BACKEND", "nouveau", 1);
+  // setenv("QT_LOGGING_RULES", "qt.wayland.compositor.debug=false", 1);
+  // setenv("QT_OPENGL", "software", 1);
 
   // Отключить проблемные функции
   unsetenv("DISPLAY");

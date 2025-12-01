@@ -37,6 +37,4 @@ Rectangle {
         anchors.rightMargin: 8
         anchors.top: parent.top
     }
-
-
 }

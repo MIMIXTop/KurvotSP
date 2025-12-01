@@ -4,6 +4,7 @@ import QtWayland.Compositor
 import QtWayland.Compositor.XdgShell
 import Launcher 1.0
 import MyModel 1.0
+import ConfigManager 1.0
 
 WaylandCompositor {
     id: compositor

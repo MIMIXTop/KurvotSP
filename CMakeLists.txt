@@ -25,10 +25,10 @@ qt_add_executable(appTemplateWaylandCompositor
 )
 
 # Layer Shell disabled due to linkage issues
-# qt6_generate_wayland_protocol_server_sources(appTemplateWaylandCompositor
-#     FILES ${CMAKE_CURRENT_SOURCE_DIR}/protocols/wlr-layer-shell-unstable-v1.xml
-# )
-# 
+#qt6_generate_wayland_protocol_server_sources(appTemplateWaylandCompositor
+#    FILES ${CMAKE_CURRENT_SOURCE_DIR}/protocols/wlr-layer-shell-unstable-v1.xml
+#)
+
 # target_sources(appTemplateWaylandCompositor PRIVATE
 #     ${CMAKE_CURRENT_BINARY_DIR}/wayland-wlr-layer-shell-unstable-v1-protocol.c
 # )
@@ -36,10 +36,11 @@ qt_add_executable(appTemplateWaylandCompositor
 file(GLOB QT_RESOURCE LIST_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/QmlSource/*.qml")
 
 set(qt_resource_files
-    "src/Resource/background.jpg"
     "src/Resource/shotdown-24.png"
     "src/Resource/reboot-24.png"
-    "compositor.conf"
+    "src/Resource/background1.png"
+    "src/Resource/background2.png"
+    "src/Resource/background3.jpg"
 )
 
 qt6_add_resources(appTemplateWaylandCompositor "appTemplateWaylandCompositor"

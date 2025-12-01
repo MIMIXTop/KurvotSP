@@ -9,6 +9,8 @@
 #include <QTextStream>
 
 #include <QFileSystemWatcher>
+#include <qcontainerfwd.h>
+#include <qtmetamacros.h>
 
 class ConfigManager : public QObject {
   Q_OBJECT
@@ -18,6 +20,7 @@ class ConfigManager : public QObject {
   Q_PROPERTY(QString browser READ browser NOTIFY configChanged)
   Q_PROPERTY(QString codeRedactor READ codeRedactor NOTIFY configChanged)
   Q_PROPERTY(QString wofi READ wofi NOTIFY configChanged)
+  Q_PROPERTY(QString telegram READ telegram NOTIFY configChanged)
 
   // Shortcuts
   Q_PROPERTY(QString keyTerminal READ keyTerminal NOTIFY configChanged)
@@ -27,6 +30,7 @@ class ConfigManager : public QObject {
   Q_PROPERTY(QString keyCodeRedactor READ keyCodeRedactor NOTIFY configChanged)
   Q_PROPERTY(QString keyWofi READ keyWofi NOTIFY configChanged)
   Q_PROPERTY(QString keyCloseWindow READ keyCloseWindow NOTIFY configChanged)
+  Q_PROPERTY(QString keyTelegram READ keyTelegram NOTIFY configChanged)
 
   // Visuals
   Q_PROPERTY(QString backgroundColor READ backgroundColor NOTIFY configChanged)
@@ -43,6 +47,7 @@ public:
   QString browser() const { return m_config.value("browser"); }
   QString codeRedactor() const { return m_config.value("codeRedactor"); }
   QString wofi() const { return m_config.value("wofi"); }
+  QString telegram() const { return m_config.value("telegram"); }
 
   QString keyTerminal() const { return m_config.value("key_terminal"); }
   QString keyFolderManager() const {
@@ -52,6 +57,7 @@ public:
   QString keyCodeRedactor() const { return m_config.value("key_codeRedactor"); }
   QString keyWofi() const { return m_config.value("key_wofi"); }
   QString keyCloseWindow() const { return m_config.value("key_closeWindow"); }
+  QString keyTelegram() const { return m_config.value("key_telegram"); }
 
   QString backgroundColor() const {
     QString v = m_config.value("backgroundColor");

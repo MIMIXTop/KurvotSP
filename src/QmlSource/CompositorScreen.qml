@@ -31,7 +31,7 @@ WaylandOutput {
         id: win
         visible: true
         width: 1920
-        height: 1280
+        height: 1080
 
         property int pixelWidth: width * screen.devicePixelRatio
         property int pixelHeight: height * screen.devicePixelRatio
@@ -82,6 +82,13 @@ WaylandOutput {
                 onActivated: {
                     launcher.launchProgram(config.folderManager, output.compositor.socketName);
                     console.log(config.keyFolderManager + " pressed - launching folder manager");
+                }
+            }
+            Shortcut {
+                sequence: config.keyTelegram
+                onActivated: {
+                    launcher.launchProgram(config.telegram, output.compositor.socketName);
+                    console.log(config.keyTelegram + " pressed - launching telegram");
                 }
             }
 

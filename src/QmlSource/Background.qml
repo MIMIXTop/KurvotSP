@@ -45,7 +45,7 @@ Rectangle {
                 console.log("===================================");
 
                 windowModel.activate(index);
-                background.activateSurface(model.shellSurface);
+                //background.activateSurface(model.shellSurface);
             }
         }
     }
