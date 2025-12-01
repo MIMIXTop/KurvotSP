@@ -39,6 +39,7 @@ class ConfigManager : public QObject {
   Q_PROPERTY(int borderSize READ borderSize NOTIFY configChanged)
   Q_PROPERTY(QString backgroundImage READ backgroundImage NOTIFY configChanged)
   Q_PROPERTY(QString configPath READ configPath NOTIFY configChanged)
+  Q_PROPERTY(int maxWindows READ maxWindows NOTIFY configChanged)
 
 public:
   explicit ConfigManager(QObject *parent = nullptr);
@@ -79,6 +80,11 @@ public:
   QString backgroundImage() const {
     QString v = m_config.value("backgroundImage");
     return v.isEmpty() ? "qrc:/src/Resource/background.jpg" : v;
+  }
+
+  int maxWindows() const {
+    QString v = m_config.value("maxWindows");
+    return v.isEmpty() ? 10 : v.toInt();
   }
 
   QString configPath() const { return m_configPath; }

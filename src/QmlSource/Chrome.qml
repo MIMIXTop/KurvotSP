@@ -25,14 +25,16 @@ QtShellChrome {
     property real availW: screenW - (layoutConfig.marginLeft + layoutConfig.marginRight)
     property real availH: screenH - (layoutConfig.marginTop + layoutConfig.marginBottom)
 
-    property real masterW: (count === 1) ? availW : availW / 2
+    property real masterW: (count === 1) ? availW : (availW - layoutConfig.columnGap) / 2
     property real stackW: masterW
 
     property real stackItemH: {
         if (count <= 1)
             return availH;
         var n = count - 1;
-        return availH / n;
+        if (n === 1)
+            return availH;
+        return (availH - (n - 1) * layoutConfig.rowGap) / n;
     }
 
     signal requestActivate
@@ -171,7 +173,7 @@ QtShellChrome {
             return layoutConfig.marginLeft;
         if (idx === 0)
             return layoutConfig.marginLeft;
-        return layoutConfig.marginLeft + masterW;
+        return layoutConfig.marginLeft + masterW + layoutConfig.columnGap;
     }
 
     y: {
@@ -179,7 +181,7 @@ QtShellChrome {
             return layoutConfig.marginTop;
         if (idx === 0)
             return layoutConfig.marginTop;
-        return layoutConfig.marginTop + (idx - 1) * stackItemH;
+        return layoutConfig.marginTop + (idx - 1) * (stackItemH + layoutConfig.rowGap);
     }
 
     width: {

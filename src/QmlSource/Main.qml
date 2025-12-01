@@ -15,6 +15,10 @@ WaylandCompositor {
         console.log("WaylandCompositor initialized with socket:", socketName);
     }
 
+    ConfigManager {
+        id: config
+    }
+
     property WaylandSurface windowFocus: null
     property variant primarySurfacesArea: null
     property int windowCount: 0
@@ -131,6 +135,14 @@ WaylandCompositor {
 
     XdgShell {
         onToplevelCreated: (toplevel, xdgSurface) => {
+            if (myModel.count >= config.maxWindows) {
+                console.log("Max windows reached (" + config.maxWindows + "), closing new window");
+                toplevel.sendClose();
+                // Alternatively, if sendClose() isn't immediate or sufficient for a just-created surface:
+                // xdgSurface.destroy();
+                return;
+            }
+
             myModel.append(xdgSurface);
 
             if (myModel.count === 1) {
