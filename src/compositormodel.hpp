@@ -22,9 +22,11 @@ public:
   Q_INVOKABLE void remove(int index);
   Q_INVOKABLE QWaylandXdgSurface *at(int index) const;
   Q_INVOKABLE void activate(int index);
+  Q_INVOKABLE void swichTile(int index);
 
 signals:
   void countChanged();
+  void layoutUpdated();
 
   void requestActivate(QWaylandXdgSurface *surface, int index);
 

@@ -38,6 +38,7 @@ class ConfigManager : public QObject {
   Q_PROPERTY(int windowSpacing READ windowSpacing NOTIFY configChanged)
   Q_PROPERTY(int borderSize READ borderSize NOTIFY configChanged)
   Q_PROPERTY(QString backgroundImage READ backgroundImage NOTIFY configChanged)
+  Q_PROPERTY(QString configPath READ configPath NOTIFY configChanged)
 
 public:
   explicit ConfigManager(QObject *parent = nullptr);
@@ -80,6 +81,8 @@ public:
     return v.isEmpty() ? "qrc:/src/Resource/background.jpg" : v;
   }
 
+  QString configPath() const { return m_configPath; }
+
 signals:
   void configChanged();
 
@@ -90,7 +93,7 @@ private:
   void loadConfig();
   QMap<QString, QString> m_config;
   QFileSystemWatcher *m_watcher;
-  QString m_configPath; // Actual path being used
+  QString m_configPath;
 };
 
 #endif // CONFIGMANAGER_HPP

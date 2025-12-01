@@ -22,7 +22,7 @@ WaylandCompositor {
 
     MyModel {
         id: myModel
-        onCountChanged: {
+        function updateLayout() {
             console.log("--- Window Statistics ---");
             console.log("Total windows:", myModel.count);
             var focusedSurface = compositor.defaultSeat.keyboardFocus;
@@ -63,6 +63,9 @@ WaylandCompositor {
             }
             console.log("-------------------------");
         }
+
+        onCountChanged: updateLayout()
+        onLayoutUpdated: updateLayout()
 
         onRequestActivate: (surface, index) => {
             console.log("Switching focus to new surface, index:", index);

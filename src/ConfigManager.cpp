@@ -28,7 +28,6 @@ void ConfigManager::onFileChanged(const QString &path) {
 }
 
 void ConfigManager::loadConfig() {
-  // Priority: 1) current dir, 2) home dir, 3) qrc embedded default
   QStringList configPaths = {"compositor.conf",
                              QDir::homePath() + "/.config/compositor.conf",
                              "/home/mimixtop/Projects/FutureKurvot/"

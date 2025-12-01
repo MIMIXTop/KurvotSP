@@ -60,4 +60,15 @@ void CompositorModel::activate(int index) {
 QWaylandXdgSurface *CompositorModel::at(int index) const {
   return index >= 0 && index < m_surfaces.size() ? m_surfaces.at(index)
                                                  : nullptr;
-} 
+}
+
+void CompositorModel::swichTile(int index) {
+  if (index < 0 || index >= m_surfaces.size()) {
+    return;
+  }
+  auto *surface = m_surfaces.at(index);
+  m_surfaces[index] = m_surfaces[0];
+  m_surfaces[0] = surface;
+  emit layoutChanged();
+  emit layoutUpdated();
+}

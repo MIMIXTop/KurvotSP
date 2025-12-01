@@ -108,6 +108,20 @@ WaylandOutput {
                 }
             }
 
+            Shortcut {
+                sequence: "Alt+S"
+                onActivated: {
+                    console.log("Alt+S pressed - swiching tile");
+                    for (var i = 0; i < output.windowModel.count; i++) {
+                        var tile = output.windowModel.at(i);
+                        if (tile.surface === output.compositor.defaultSeat.keyboardFocus) {
+                            output.windowModel.swichTile(i);
+                            break;
+                        }
+                    }
+                }
+            }
+
             WaylandCursorItem {
                 inputEventsEnabled: false
                 x: mouseTracker.mouseX
@@ -121,6 +135,10 @@ WaylandOutput {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 color: "transparent"
+                onRequestOpenConfig: {
+                    console.log("Opening config file: " + config.configPath);
+                    launcher.launchProgram(config.codeRedactor + " " + config.configPath, output.compositor.socketName);
+                }
             }
 
             Background {
