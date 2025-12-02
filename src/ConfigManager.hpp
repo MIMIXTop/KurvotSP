@@ -44,50 +44,30 @@ class ConfigManager : public QObject {
 public:
   explicit ConfigManager(QObject *parent = nullptr);
 
-  QString terminal() const { return m_config.value("terminal"); }
-  QString folderManager() const { return m_config.value("folderManager"); }
-  QString browser() const { return m_config.value("browser"); }
-  QString codeRedactor() const { return m_config.value("codeRedactor"); }
-  QString wofi() const { return m_config.value("wofi"); }
-  QString telegram() const { return m_config.value("telegram"); }
+  QString terminal() const;
+  QString folderManager() const;
+  QString browser() const;
+  QString codeRedactor() const;
+  QString wofi() const;
+  QString telegram() const;
 
-  QString keyTerminal() const { return m_config.value("key_terminal"); }
-  QString keyFolderManager() const {
-    return m_config.value("key_folderManager");
-  }
-  QString keyBrowser() const { return m_config.value("key_browser"); }
-  QString keyCodeRedactor() const { return m_config.value("key_codeRedactor"); }
-  QString keyWofi() const { return m_config.value("key_wofi"); }
-  QString keyCloseWindow() const { return m_config.value("key_closeWindow"); }
-  QString keyTelegram() const { return m_config.value("key_telegram"); }
+  QString keyTerminal() const;
+  QString keyFolderManager() const;
+  QString keyBrowser() const;
+  QString keyCodeRedactor() const;
+  QString keyWofi() const;
+  QString keyCloseWindow() const;
+  QString keyTelegram() const;
 
-  QString backgroundColor() const {
-    QString v = m_config.value("backgroundColor");
-    return v.isEmpty() ? "#333333" : v;
-  }
-  QString focusColor() const {
-    QString v = m_config.value("focusColor");
-    return v.isEmpty() ? "#00FF00" : v;
-  }
-  int windowSpacing() const {
-    QString v = m_config.value("windowSpasing");
-    return v.isEmpty() ? 20 : v.toInt();
-  }
-  int borderSize() const {
-    QString v = m_config.value("borderSize");
-    return v.isEmpty() ? 4 : v.toInt();
-  }
-  QString backgroundImage() const {
-    QString v = m_config.value("backgroundImage");
-    return v.isEmpty() ? "qrc:/src/Resource/background.jpg" : v;
-  }
+  QString backgroundColor() const;
+  QString focusColor() const;
+  int windowSpacing() const;
+  int borderSize() const;
+  QString backgroundImage() const;
 
-  int maxWindows() const {
-    QString v = m_config.value("maxWindows");
-    return v.isEmpty() ? 10 : v.toInt();
-  }
+  int maxWindows() const;
 
-  QString configPath() const { return m_configPath; }
+  QString configPath() const;
 
 signals:
   void configChanged();

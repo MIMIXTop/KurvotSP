@@ -10,9 +10,7 @@ class Clock : public QObject {
 public:
   Clock(QObject *parent = nullptr);
 
-  QString time() const {
-    return m_time == "" ? QTime::currentTime().toString("hh:mm") : m_time;
-  }
+  QString time() const;
   QString date() const { return m_date; }
 
 signals:

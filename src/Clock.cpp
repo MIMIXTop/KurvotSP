@@ -18,6 +18,10 @@ Clock::Clock(QObject *parent) : QObject(parent) {
   updateDate();
 }
 
+QString Clock::time() const {
+    return m_time == "" ? QTime::currentTime().toString("hh:mm") : m_time;
+}
+
 void Clock::updateTime() {
   m_time = QDateTime::currentDateTime().toString("hh:mm");
   emit timeChanged();

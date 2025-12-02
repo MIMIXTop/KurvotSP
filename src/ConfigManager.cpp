@@ -17,6 +17,66 @@ ConfigManager::ConfigManager(QObject *parent) : QObject(parent) {
   }
 }
 
+QString ConfigManager::terminal() const { return m_config.value("terminal"); }
+
+QString ConfigManager::folderManager() const { return m_config.value("folderManager"); }
+
+QString ConfigManager::browser() const { return m_config.value("browser"); }
+
+QString ConfigManager::codeRedactor() const { return m_config.value("codeRedactor"); }
+
+QString ConfigManager::wofi() const { return m_config.value("wofi"); }
+
+QString ConfigManager::telegram() const { return m_config.value("telegram"); }
+
+QString ConfigManager::keyTerminal() const { return m_config.value("key_terminal"); }
+
+QString ConfigManager::keyFolderManager() const {
+    return m_config.value("key_folderManager");
+}
+
+QString ConfigManager::keyBrowser() const { return m_config.value("key_browser"); }
+
+QString ConfigManager::keyCodeRedactor() const { return m_config.value("key_codeRedactor"); }
+
+QString ConfigManager::keyWofi() const { return m_config.value("key_wofi"); }
+
+QString ConfigManager::keyCloseWindow() const { return m_config.value("key_closeWindow"); }
+
+QString ConfigManager::keyTelegram() const { return m_config.value("key_telegram"); }
+
+QString ConfigManager::backgroundColor() const {
+    QString v = m_config.value("backgroundColor");
+    return v.isEmpty() ? "#333333" : v;
+}
+
+QString ConfigManager::focusColor() const {
+    QString v = m_config.value("focusColor");
+    return v.isEmpty() ? "#00FF00" : v;
+}
+
+int ConfigManager::windowSpacing() const {
+    QString v = m_config.value("windowSpasing");
+    return v.isEmpty() ? 20 : v.toInt();
+}
+
+int ConfigManager::borderSize() const {
+    QString v = m_config.value("borderSize");
+    return v.isEmpty() ? 4 : v.toInt();
+}
+
+QString ConfigManager::backgroundImage() const {
+    QString v = m_config.value("backgroundImage");
+    return v.isEmpty() ? "qrc:/src/Resource/background.jpg" : v;
+}
+
+int ConfigManager::maxWindows() const {
+    QString v = m_config.value("maxWindows");
+    return v.isEmpty() ? 10 : v.toInt();
+}
+
+QString ConfigManager::configPath() const { return m_configPath; }
+
 void ConfigManager::onFileChanged(const QString &path) {
   Loger::log("Config file changed: " + path.toStdString());
   qInfo() << "Config file changed:" << path;
